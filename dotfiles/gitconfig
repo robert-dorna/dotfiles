@@ -1,0 +1,21 @@
+[user]
+	name = Robert Dorna
+	email = rdorna8@gmail.com
+[core]
+	editor = nvim
+	excludesfile = $HOME/.gitignore_global
+[alias]
+	co = checkout
+	st = status
+	ci = commit
+	br = branch
+	unstage = reset HEAD --
+	dangerous-unshit = clean -f -d
+	last = log -1 HEAD
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+	tre = log -n 15 --graph --decorate --pretty=oneline --abbrev-commit
+	adog = log --all --decorate --oneline --graph
+	graph1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold red)%d%C(reset)' --all
+	g = log -n 15 --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	graph2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	g2 = log -n 10 --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all

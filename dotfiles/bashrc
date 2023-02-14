@@ -1,0 +1,383 @@
+
+###############################
+# ZSH and Oh-my-zsh settings
+###############################
+
+#CASE_SENSITIVE="false" 			                
+#HYPHEN_INSENSITIVE="false" 			            
+#ENABLE_CORRECTION="false"
+#COMPLETION_WAITING_DOTS="%F{yellow}  completing...%f"   # Caution: can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+#HIST_STAMPS="yyyy-mm-dd"                    
+
+###############################
+# Environment
+###############################
+
+# export LANG=en_GB.UTF-8
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
+export PATH="$HOME/Projects/tangle:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools"
+if [[ -n $SSH_CONNECTION ]]
+  then export EDITOR='vim'                         
+  else export EDITOR='nvim'
+fi
+#export ARCHFLAGS
+# unset LESS                    # to disable pager 
+export PAGER=less  		
+export PROMPT_SPACER=' '       
+export BL_ATH=74:45:CE:18:AE:39
+export BL_JBL=F8:5C:7D:15:76:E1
+
+###############################
+# Environment - Local
+###############################
+
+HD=$HOME/Projects/MomentumOS/dotfiles
+HC=$HOME/.config
+HL=$HOME/.local
+HS=$HOME/.ssh
+HR=$HOME/source
+C=$HOME/.bashrc
+
+###############################
+# Commands - Hardware
+###############################
+
+#
+# Day/Night Theme
+#
+
+if [ "$(uname)" = "Darwin" ]; then
+  alias ct="osascript -e 'tell app \"System Events\" to tell appearance preferences to set dark mode to not dark mode'"
+else
+  alias ct='echo not implemented'
+fi
+if [ "$(uname)" = "Linux" ]; then
+  alias ctn='redshift -O 4500'	# make them only one alias that swaps modes
+  alias ctd='redshift -x'       # also figure out better alias name?
+else
+  alias ctn='not implemented'  
+  alias ctd='not implemented'
+fi
+
+#
+# x86_64 / ARM Mode (Apple chip only)
+#
+
+if [ "$(uname)" = 'Darwin' ]; then
+  function q {
+    if [ -z "$ARCHFLAGS" ]; then
+      export ARCHFLAGS="-arch x86_64"	# compilation flags
+      exec arch -x86_64 zsh -l 
+    else
+      unset ARCHFLAGS
+      exec arch -arm64 zsh -l 
+    fi
+  }
+elif [ "$(uname)" = 'Linux' ]; then
+  function q {
+    echo not implemented
+  }
+fi
+
+#
+# Monitor selection
+#
+
+function xr() {
+  if [ "$1" = "" ]; then
+    xrandr --output HDMI-1 --off --output eDP-1 --primary --auto
+  elif [ "$1" = "1" ]; then
+    xrandr --output eDP-1 --off --output HDMI-1 --primary --auto 
+  elif [ "$1" = "l" ]; then
+    xrandr --output eDP-1 --auto --output HDMI-1 --auto --primary --left-of eDP-1
+  elif [ "$1" = "r" ]; then
+    xrandr --output eDP-1 --auto --output HDMI-1 --auto --primary --right-of eDP-1
+  else
+    echo "unknown extra argument: $1 (known: 1, l, r)"
+  fi
+}
+
+#
+# Other utils (devices and network testing, mouse, bluetooth)
+#
+
+alias lsusb_loop='while true; do clear; date; lsusb; sleep 1; done'
+alias network_speed_test='fast -u --single-line'
+alias reset_mouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
+alias bl='$HD/bin/bluetooth.sh'
+
+###############################
+# Commands - Configuration
+###############################
+
+#
+# Aliases management
+#
+
+alias a='alias'
+alias au='unalias'
+function af() { alias | grep "$1"; }
+function afg() { af "git $1"; }
+function ac() { a "$1" | sed "s/[^=]*='//;s/'//"; }  # TODO: this should remove last char not all \'
+
+#
+# Config files editing and reloading
+#
+
+alias bc='$EDITOR $HD/bin/bluetooth.sh'
+alias c='$EDITOR $C'
+alias cr="exec bash"  # zsh version has -l
+
+###############################
+# Commands - Prompt
+###############################
+
+#
+# Pager switching
+#
+
+alias pgc='export PAGER=cat'
+alias pgl='export PAGER=less'
+alias pgn='export PAGER=nvim'
+function pg {
+  if [ "$PAGER" = "less" ]; then
+    export PAGER=cat
+  else
+    export PAGER=less
+  fi
+}
+
+#
+# Line break switching
+#
+
+function v() {
+  if [ "$PROMPT_SPACER" = ' ' ]; then
+    export PROMPT_SPACER=$'\n'
+  else
+    export PROMPT_SPACER=' '
+  fi
+}
+
+#
+# Prompt definition
+#
+
+function git_prompt_info() {
+  local ref
+  ref=$(git symbolic-ref --short HEAD 2> /dev/null) \
+  || ref=$(git rev-parse --short HEAD 2> /dev/null) \
+  || return 0
+
+  echo "(%F{red}$ref%f)"
+}
+
+if [ "$(basename $SHELL)" = "zsh" ]; then
+  setopt prompt_subst
+  if [ "$(uname)" = "Linux" ]; then
+    PROMPT='%F{cyan}$(padl 4 $PAGER)%f %F{blue}%B%c/%b%f $(git_prompt_info)$PROMPT_SPACER%(!.#.$) '
+  else
+    PROMPT='%F{green}$(pad 5 $(arch))%f/%F{cyan}$(padl 4 $PAGER)%f %F{blue}%B%c/%b%f $(git_prompt_info)$PROMPT_SPACER%(!.#.$) '
+  fi
+fi
+
+###############################
+# Commands - Programs
+###############################
+
+# Use default
+alias o='xdg-open'
+
+# Firefox
+if [ "$(uname)" = "Darwin" ]; then
+  alias b='open -n -a Firefox.app --args'
+else
+  alias b='firefox &'
+fi
+
+# Ranger
+function f() { ranger "$1" --choosedir="$HOME"/.rangerdir; cd "$(cat $HOME/.rangerdir)"; }
+
+# Find
+alias fn='find . -iname'
+function fni() { find "$1" -iname "$2"; }
+
+# Neovim
+alias n='nvim'
+alias nc='nvim $HC/nvim/init.lua'
+alias nco='nvim $HC/nvim/lua/user/options.lua'
+
+# SSH
+alias s='echo "SSH_AGENT_PID: $SSH_AGENT_PID"; l $HS'
+alias sa='[[ "$SSH_AGENT_PID" = "" ]] && eval $(ssh-agent)'
+alias sag='sa && ssh-add $HS/github'
+alias sat='sa && ssh-add $HS/tandem_bitbucket_key'
+
+# Tangle
+alias ta='tangle.py'
+alias tangle='tangle.py'
+alias tangle-shell='$HOME/Projects/tangle/scripts/tangle-nix-env.sh shell'
+alias ts='tangle-shell'
+alias tsl='cd;$HOME/Projects/dotfiles/nixos/layout_coder/load_layout.sh 1'
+alias box="ssh 'pi@192.168.0.244'"
+function boxm() {
+  if [ -b /dev/mmcblk0 ]; then
+    if ! [ -d /mnt/sdcard/home ]; then
+      sudo mount /dev/mmcblk0p2 /mnt/sdcard
+    fi
+
+    if [ -d /mnt/sdcard/home ]; then
+      export BOX_PATH=/mnt/sdcard/home/pi/tangle_storage
+    fi
+  fi
+}
+
+###############################
+# Commands - Utils shortcuts
+###############################
+
+alias cgrep='\grep --color=auto'
+alias grep='grep -i --color=auto'
+alias e='echo'
+alias ls='ls --color=auto --group-directories-first'
+alias lsa='ls -a'
+alias l='ls -lh --group-directories-first'
+alias la='ls -lAh --group-directories-first'
+alias lt='tree -C'
+alias lta='tree -C -a -I "*.git/"'
+alias ltaa='tree -C -a'
+
+###############################
+# Commands - Output parsing
+###############################
+
+#
+# Output clearing
+#
+
+alias z='clear'
+alias x='reset'
+alias xx='last_command="${history[${#history}]}"; reset; eval "$last_command"'
+
+#
+# Output copy & pasting
+#
+
+if [ "$(uname)" = "Darwin" ]; then
+  alias y='pbcopy'
+  alias p='pbpaste'
+else
+  alias y='echo not implemented'
+  alias p='echo not implemented'
+fi
+
+#
+# Padding
+#
+
+function pad { printf "%${1}s" "$2"; }
+function padl { printf "%-${1}s" "$2"; }
+
+#
+# Extracting
+#
+
+function word { awk "{print \$$1}"; }
+alias wd="word"
+alias h='head'
+alias hn='head -n'
+alias h1='head -n 1'
+alias t='tail'
+alias tn="tail -n"
+alias t1='tail -n 1'
+function tw() { tn "$1" | wd "$2"; }
+function hw() { hn "$1" | wd "$2"; }
+function th() { tn "$1" | hn "$2"; }
+function thw() { tn "$1" | hn "$2" | wd "$3"; }
+
+#
+# Replacing
+#
+
+function r() { sed "s/$1/$2/g;"; }
+function rc() { cmd=""; for str in "$@"; do cmd="${cmd}s/$str//g;"; done; sed "$cmd"; }
+function rn() {
+  if [ "${1:0:1}" = "-" ]; then
+    th "$1" 1
+  else
+    th "+$1" 1
+  fi
+}
+
+###############################
+# Commands - Git
+###############################
+
+# git clone
+function g_repo_name() { e "todo g_repo_name"; }
+# function g_repo_name() { e ${${1##*/}%.*}; }
+function gc() { git clone "$1" "$HR/$(g_repo_name $1)"; }
+function gls() { ls "$@" "$HR"; }
+function gcd() { [ -z "$1" ] && cd "$HR" && return; repo="$HR/$(g_repo_name $1)"; [ -d "$repo" ] || gc "$1"; cd "$repo"; }
+function ghc() { [ -n "$1" ] && gc "https://github.com/$1.git"; }
+function ghcd() { [ -n "$1" ] && gcd "https://github.com/$1.git" || gcd; }
+
+# git status/branches/graphs/tree
+# todo: clean git tree, remove origins and all other merged branches
+alias gst='git status -sb'
+function g_remote_branch_info {
+  if [ "$1" = "origin/master" ] || [ "$1" = "origin/main" ] || [ "$1" = "origin/HEAD" ] || [ "$1" = "->" ] ; then
+    echo "core"
+  else
+    echo "extra"
+  fi
+}
+alias gg='git graph1'
+alias gbr='git branch -a --sort=-committerdate --format="%(color: red)%(committerdate:short) %(color: cyan)%(refname:short)"'
+alias gbrc='gbr --merged master --no-contains master | wd 2 | xargs git branch -r -d'
+
+alias gco='git checkout'
+
+# git fetch
+function gf() {
+  git checkout master
+  git pull
+  gbrc
+}
+
+# git pull, add, diff, commit, push, merge, rebase
+alias gl='git pull'
+alias ga='git add'
+function gan() { ga $(gst | thw +$(($1+1)) 1 2); }
+alias gr='git restore'
+alias grs='git restore --staged'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gc='git commit -m'
+alias gca='git commit --amend'
+alias gu='git push'
+
+function loc() { fn "*.$1" | xargs wc -l; } 
+function locin() { fni "$1" "*.$2" | xargs wc -l; } 
+function loci() { find . -path "*node_modules*" -prune -o -path "*build/*" -prune -o -path "*test-results/*" -prune -o -name "*.$1" -print | xargs wc -l; }
+function locini() { find "$1" -path "*node_modules*" -prune -o -path "*build/*" -prune -o -path "*test-results/*" -prune -o -name "*.$2" -print | xargs wc -l; }
+
+
+# cover: HR bullshit   : workday 
+# cover: agile shit    : jira, confluence
+# cover: dev tools     : postman
+# cover: ci            : bitbucket, bitrise, sentry, appcenter, fastlane, jenkins
+# cover: communication : outlook, slack, teams
+
+# NVIM as IDE  (below are some things to add/consider to NVIM and/or terminal)
+#   - yank to pbcopy, J and K for faster navigation,
+#     jq interactive, grep interactive, regex interactive (how to regex),
+#     live/repl sed on last output,...
+#
+# ranger config (LOC instead of KiB for text/source code)
+#
+
