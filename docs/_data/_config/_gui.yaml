@@ -1,0 +1,32 @@
+
+types:
+  'note':
+    emoji: "✍️"
+    fields:
+      - name: title
+        style: "display: flex; flex: 1;"
+  'task':
+    emoji: "✅"
+    fields:
+      - name: title
+        style: "display: flex; flex: 1;"
+      - name: project
+        style: "width: 40px; font-size: 22px; color: #8A817C; margin-left: 35px;"
+        colors:
+          'library': 'cornflowerblue'
+          'cli': 'red'
+          'pwa': 'burlywood'
+          'server': 'red'
+          'cloud': 'green'
+      - name: label
+        style: "width: 90px; font-size: 22px; color: #8A817C; margin-left: 35px;"
+        colors:
+          'feat': 'teal'
+          'bug': 'crimson'
+          'refactor': 'dodgerblue'
+      - name: due_date
+        style: "width: 130px; font-size: 22px; color: #8A817C; margin-left: 35px;"
+  
+order:
+  - task
+  - note

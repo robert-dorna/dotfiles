@@ -8,3 +8,4 @@ fi
 ln -is $HD/bashrc ~/.bashrc
 ln -is $HD/gitconfig ~/.gitconfig
 ln -iTs $HD/nvim ~/.config/nvim
+ln -iTs $HD/nixpkgs ~/.config/nixpkgs

@@ -1,0 +1,57 @@
+[
+    {
+        "_id": 0,
+        "body": "",
+        "due_date": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "Works out of the box"
+    },
+    {
+        "_id": 1,
+        "body": "",
+        "title": "OS logs center and system health center"
+    },
+    {
+        "_id": 2,
+        "body": "",
+        "title": "OS network manager and complete overview"
+    },
+    {
+        "_id": 3,
+        "body": "",
+        "title": "Tangler integration for entire OS data manager"
+    },
+    {
+        "_id": 4,
+        "body": "",
+        "title": "UI"
+    },
+    {
+        "_id": 5,
+        "body": "",
+        "title": "UI Tangler integration"
+    },
+    {
+        "_id": 6,
+        "body": "",
+        "title": "Android Launcher"
+    },
+    {
+        "_id": 7,
+        "body": "",
+        "title": "Android Launcher Tangler integration"
+    },
+    {
+        " statistics, crash logs ": "",
+        " stats, optional share of this data) (to e.g. detect planned obsolete).": "",
+        "_id": 8,
+        "body": "GUI, FileSystem, logs, ..., Tangler Cloud, access to performance monitoring (usage logs and statistics, crash logs and stats, optional share of this data) (to e.g. detect planned obsolete).",
+        "title": "stuff"
+    },
+    {
+        "_id": 9,
+        "body": "integracja livestream telefon komputer reverse proxy przegladarka",
+        "title": "integracja livestream telefon komputer"
+    }
+]

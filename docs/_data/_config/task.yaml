@@ -1,0 +1,15 @@
+required:
+  title: text
+optional:
+  due_date: date
+  label:
+    - 'feat'
+    - 'bug'
+    - 'refactor'
+  project:
+    - 'library'
+    - 'cli'
+    - 'pwa'
+    - 'server'
+    - 'cloud'
+  body: markdown

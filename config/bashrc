@@ -1,31 +1,9 @@
 
 ###############################
-# ZSH and Oh-my-zsh settings
-###############################
-
-#CASE_SENSITIVE="false" 			                
-#HYPHEN_INSENSITIVE="false" 			            
-#ENABLE_CORRECTION="false"
-#COMPLETION_WAITING_DOTS="%F{yellow}  completing...%f"   # Caution: can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-#HIST_STAMPS="yyyy-mm-dd"                    
-
-###############################
 # Environment
 ###############################
 
-# export LANG=en_GB.UTF-8
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
-export PATH="$HOME/Projects/tangle:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools"
-if [[ -n $SSH_CONNECTION ]]
-  then export EDITOR='vim'                         
-  else export EDITOR='nvim'
-fi
-#export ARCHFLAGS
-# unset LESS                    # to disable pager 
 export PAGER=less  		
 export PROMPT_SPACER=' '       
 export BL_ATH=74:45:CE:18:AE:39
@@ -35,7 +13,7 @@ export BL_JBL=F8:5C:7D:15:76:E1
 # Environment - Local
 ###############################
 
-HD=$HOME/Projects/MomentumOS/dotfiles
+HD=$HOME/Projects/dotfiles/config
 HC=$HOME/.config
 HL=$HOME/.local
 HS=$HOME/.ssh
@@ -50,38 +28,9 @@ C=$HOME/.bashrc
 # Day/Night Theme
 #
 
-if [ "$(uname)" = "Darwin" ]; then
-  alias ct="osascript -e 'tell app \"System Events\" to tell appearance preferences to set dark mode to not dark mode'"
-else
-  alias ct='echo not implemented'
-fi
-if [ "$(uname)" = "Linux" ]; then
-  alias ctn='redshift -O 4500'	# make them only one alias that swaps modes
-  alias ctd='redshift -x'       # also figure out better alias name?
-else
-  alias ctn='not implemented'  
-  alias ctd='not implemented'
-fi
-
-#
-# x86_64 / ARM Mode (Apple chip only)
-#
-
-if [ "$(uname)" = 'Darwin' ]; then
-  function q {
-    if [ -z "$ARCHFLAGS" ]; then
-      export ARCHFLAGS="-arch x86_64"	# compilation flags
-      exec arch -x86_64 zsh -l 
-    else
-      unset ARCHFLAGS
-      exec arch -arm64 zsh -l 
-    fi
-  }
-elif [ "$(uname)" = 'Linux' ]; then
-  function q {
-    echo not implemented
-  }
-fi
+alias ct='echo not implemented (change theme)'
+alias ctn='redshift -O 4500'	# make them only one alias that swaps modes
+alias ctd='redshift -x'       # also figure out better alias name?
 
 #
 # Monitor selection
@@ -109,6 +58,9 @@ alias lsusb_loop='while true; do clear; date; lsusb; sleep 1; done'
 alias network_speed_test='fast -u --single-line'
 alias reset_mouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias bl='$HD/bin/bluetooth.sh'
+alias wifi='nmcli device wifi'
+alias galaxyon='sudo nmcli device wifi connect Galaxy\ A70D79E'
+alias galaxyoff='sudo nmcli device wifi disconnect Galaxy\ A70D79E'
 
 ###############################
 # Commands - Configuration
@@ -217,11 +169,11 @@ alias sa='[[ "$SSH_AGENT_PID" = "" ]] && eval $(ssh-agent)'
 alias sag='sa && ssh-add $HS/github'
 alias sat='sa && ssh-add $HS/tandem_bitbucket_key'
 
-# Tangle
-alias ta='tangle.py'
-alias tangle='tangle.py'
-alias tangle-shell='$HOME/Projects/tangle/scripts/tangle-nix-env.sh shell'
-alias ts='tangle-shell'
+# Tangler
+alias ta='tangler.py'
+alias tangler='tangler.py'
+alias tangler-shell='$HOME/Projects/Tangler/scripts/tangler-nix-env.sh shell'
+alias ts='tangler-shell'
 alias tsl='cd;$HOME/Projects/dotfiles/nixos/layout_coder/load_layout.sh 1'
 alias box="ssh 'pi@192.168.0.244'"
 function boxm() {
@@ -231,7 +183,7 @@ function boxm() {
     fi
 
     if [ -d /mnt/sdcard/home ]; then
-      export BOX_PATH=/mnt/sdcard/home/pi/tangle_storage
+      export BOX_PATH=/mnt/sdcard/home/pi/tangler_storage
     fi
   fi
 }

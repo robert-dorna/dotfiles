@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  app:
+    image: ssurrealism/tangler-app
+  srv:
+    image: ssurrealism/tangler-server
+    volumes:
+      - ./tangler.yaml:/usr/src/app/tangler.yaml
+      - ./:/usr/src/app/storage/
+  proxy:
+    image: ssurrealism/tangler-proxy
+    ports:
+      - 10000:80

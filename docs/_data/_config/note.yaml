@@ -1,0 +1,5 @@
+required:
+  title: text
+optional:
+  body: markdown
+  date: text

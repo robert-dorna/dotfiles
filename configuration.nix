@@ -99,6 +99,7 @@
 
   virtualisation.virtualbox.host.enable = true;
 
+
   environment.systemPackages = with pkgs; [
     sqlite
     sd
@@ -106,7 +107,6 @@
     shellcheck
     ranger
     vscode
-    yq-go
     volctl
     rxvt_unicode
     evince
@@ -114,13 +114,20 @@
     brightnessctl
     marktext
     drawio
-    jq
     tree
+
+    jq
+    yq-go
     git
+    nodejs
+
     python39
     poetry
-    nodejs
     jupyter
+
+    # min browser
+    # fast-cli
+    # pup
   ];
 
   # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
