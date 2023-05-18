@@ -1,24 +1,20 @@
-# TODO: make something from below
+# Custom ISO for LiveCD/USB boot
 
-#!/usr/bin/env bash
+NixOS offers you an option to build you own custom .iso image instead of downloading one.
 
-nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
-#!/usr/bin/env bash
+See: https://nixos.wiki/wiki/Creating_a_NixOS_live_CD.
 
-if ! [ -e "$1" ]; then
-  echo "error: iso not found"
-  echo "usage: ./install.sh <iso> <block_device> (block device is e.g. /dev/sdb)"
-  exit 1
-fi
+I'm using this feature to create an .iso with docker and ngrok on it which I sometimes
+use on my old computers to host dockerized apps.
 
-if ! [ -b "$2" ]; then
-  echo "error: block_device not found"
-  echo "usage: ./install.sh <iso> <block_device> (block device is e.g. /dev/sdb)"
-  exit 1
-fi
+### building image
 
-dd if=$1 of=$2 bs=4M status=progress conv=fdatasync
-#!/usr/bin/env bash
+    nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
+    
+### writing image to usb
 
-# nix-shell -p qemu
-qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso
+    dd if=result/iso/nixos-*.iso of=/dev/sdX bs=4M status=progress conv=fdatasync  # replace sdX with your usb stick
+
+### testing image locally on VM
+
+    qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso  # requires 'qemu' package
