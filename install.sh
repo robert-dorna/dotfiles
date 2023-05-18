@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -z "$HD" ]; then
-	echo "error: first set the \$HD (dotfiles path) env variable"
-	exit 1
-fi
-
-ln -is $HD/bashrc ~/.bashrc
-ln -is $HD/gitconfig ~/.gitconfig
-ln -iTs $HD/nvim ~/.config/nvim
-ln -iTs $HD/nixpkgs ~/.config/nixpkgs
+ln -is $PWD/config/bashrc ~/.bashrc
+ln -is $PWD/config/gitconfig ~/.gitconfig
+ln -iTs $PWD/config/nvim ~/.config/nvim
+ln -iTs $PWD/config/nixpkgs ~/.config/nixpkgs
+ln -iTs $PWD/config/background-image ~/.background-image
