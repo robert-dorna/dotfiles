@@ -1,5 +1,0 @@
-
-directories: 
-  storage: '/usr/src/app/storage'
-  data: '/usr/src/app/storage/_data'
-  config: '/usr/src/app/storage/_data/_config'
