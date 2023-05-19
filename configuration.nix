@@ -5,51 +5,64 @@
 { config, pkgs, ... }:
 
 {
-  # hardware
+  ## hardware
   imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  ## hardware Spectre
+  # hardware.enableAllFirmware = true;
+  # boot = {
+  #   loader = {
+  #     systemd-boot.enable = true;
+  #     efi.canTouchEfiVariables = true;
+  #   };
+  #   extraModProbeConfig = ''
+  #     options snd-intel-dspcfg dsp_driver=1
+  #   '';
+  # };
 
-  hardware.enableAllFirmware = true;
-  boot.extraModprobeConfig = ''
-    options snd-intel-dspcfg dsp_driver=1
-  '';
-
-  # network 
-  networking.hostName = "Spectre"; 
-  networking.networkmanager.enable = true;
-  networking.firewall = {
+  ## hardware Veteran
+  boot.loader.grub = {
     enable = true;
-    allowedTCPPorts = [ 80 443 19000 19001 19002 ];
-    allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-    ];
+    version = 2;
+    device = "/dev/sda";
+    extraEntries = ''
+      menuentry "Windows 10" {
+        chainloader (hd0,1)+1
+      }
+    '';
   };
 
-  # timezone and i18n
+  ## network
+  networking = {
+    hostName = "Veteran";  # or "Spectre"
+    networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 443 8080 8081 19000 19001 19002 ];
+      allowedUDPPortRanges = [
+        { from = 4000; to = 4007; }
+        { from = 8000; to = 8010; }
+      ];
+    };
+  };
+
+  ## touchpad and sound
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  services.xserver.libinput.enable = true;
+  
+  ## timezone and i18n
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # i3wm
+  ## i3wm
   environment.pathsToLink = [ "/libexec" ];
-
   services.xserver = {
     enable = true;
-
     layout = "pl";
-    # xkbVariant = "workman,";
-    # xkbOptions = "grp:win_space_toggle";
-    
-    desktopManager = {
-      xterm.enable = false;
-    };
-    
-    displayManager = {
-      defaultSession = "none+i3";
-    };
-    
+    desktopManager.xterm.enable = false;
+    displayManager.defaultSession = "none+i3";
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -59,83 +72,124 @@
         i3lock-fancy-rapid
       ];
     };
-  };
-
-  # programs
+  };  
+  
+  ## fonts
   fonts.fonts = with pkgs; [
     hermit
     source-code-pro
     terminus_font
   ];
 
+  ## users
+  users.users.robert_dorna = {
+    isNormalUser = true;
+    # note: docker group is a vuln! (root escalation)
+    extraGroups = [ "wheel" "audio" "docker" "adbusers" ];
+    packages = with pkgs; [
+      firefox
+      # min browser
+    ];
+  };
+
+  ## programs
+  virtualisation.docker.enable = true;
+  programs.adb.enable = true;
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     configure = {
       packages.myPlugins = with pkgs.vimPlugins; {
-        start = [ vim-nix ]; 
+        start = [ vim-nix ];
         opt = [];
-      };
+      };   
       customRC = ''
-        luafile /home/ssurrealism/.config/nvim/init-nix.lua
+        luafile /home/robert_dorna/.config/nvim/init-nix.lua
       '';
     };
-  };  
-
-  # touchpad and sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  services.xserver.libinput.enable = true;
-
-  # user account
-  users.users.ssurrealism = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "vboxusers" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-    ];
   };
-
-  virtualisation.virtualbox.host.enable = true;
-
-
+  nixpkgs.config.allowUnfree = true;  # todo: make this only for vscode
   environment.systemPackages = with pkgs; [
-    sqlite
-    sd
-    redshift
-    shellcheck
+    ## basics
     ranger
-    vscode
-    volctl
     rxvt_unicode
-    evince
-    signal-desktop
-    brightnessctl
-    marktext
-    drawio
-    tree
+    git
 
+    ## look & feel
+    redshift
+    volctl
+    brightnessctl
+
+    ## sysadmin & scripting
+    file
+    tree
+    shellcheck
     jq
     yq-go
-    git
-    nodejs
+    sd
+    unzip
+    wget
+    htop
+    gparted
+    # fast-cli
+    # pup
 
+    ## social stuff
+    signal-desktop
+    discord
+
+    ## documents
+    marktext
+    drawio
+    evince
+
+    ## programming
+    vscode
+    ngrok
+    minikube
+    kompose
+    postman
+    cloc
+    
+    ## android
+    android-studio
+    bundletool
+    scrcpy
+
+    ## python
     python39
     poetry
     jupyter
 
-    # min browser
-    # fast-cli
-    # pup
+    ## node
+    nodejs
+
+    ## sql
+    sqlite
+
+    ## c++
+    gcc
+    gdb
+    # qtcreator
   ];
 
-  # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-  #  "vscode"
-  # ];
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-  nixpkgs.config.allowUnfree = true;
+  # List services that you want to enable:
 
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+
+  # Copy the NixOS configuration file and link it from the resulting system
+  # (/run/current-system/configuration.nix). This is useful in case you
+  # accidentally delete configuration.nix.
+  # system.copySystemConfiguration = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
