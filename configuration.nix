@@ -15,7 +15,7 @@
   #     systemd-boot.enable = true;
   #     efi.canTouchEfiVariables = true;
   #   };
-  #   extraModProbeConfig = ''
+  #   extraModprobeConfig = ''
   #     options snd-intel-dspcfg dsp_driver=1
   #   '';
   # };
