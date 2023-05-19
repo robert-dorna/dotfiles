@@ -55,6 +55,32 @@
   ## timezone and i18n
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
+  
+  ## fonts
+  fonts.fonts = with pkgs; [
+    hermit
+    source-code-pro
+    terminus_font
+  ];
+
+  ## printing
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      gutenprint
+      gutenprintBin
+      hplip
+      hplipWithPlugin
+      brlaser
+      brgenml1lpr
+      brgenml1cupswrapper
+    ];
+  };
 
   ## i3wm
   environment.pathsToLink = [ "/libexec" ];
@@ -73,27 +99,25 @@
       ];
     };
   };  
-  
-  ## fonts
-  fonts.fonts = with pkgs; [
-    hermit
-    source-code-pro
-    terminus_font
-  ];
 
   ## users
+  # services.openssh.enable = true;
   users.users.robert_dorna = {
     isNormalUser = true;
-    # note: docker group is a vuln! (root escalation)
-    extraGroups = [ "wheel" "audio" "docker" "adbusers" ];
+    # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
+    extraGroups = [ "wheel" "audio" "docker" "adbusers" /*"vboxusers*/ ];
     packages = with pkgs; [
       firefox
       # min browser
     ];
+    # openssh.authorizedKeys.keys = [
+    #   "ssh-ed25519 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA bbbbbbbbbbb@ccccccc"
+    # ];
   };
 
   ## programs
   virtualisation.docker.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
   programs.adb.enable = true;
   programs.neovim = {
     enable = true;
@@ -180,11 +204,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
