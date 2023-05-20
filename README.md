@@ -1,6 +1,6 @@
 # dotfiles
 
-My set of files for OS configuration.
+My set of files for OS and packages configuration.
 
 I'm using [NixOS](https://nixos.org).
 
@@ -11,7 +11,17 @@ I have 2 main computers (and a USB stick for third computer):
 
 Both of them combined with old but good VGA monitor give me a nice big 3 monitors setup.
 
-### Computers setup
+### dotfiles setup (packages configuration)
+
+This should work not only on NixOS buy also other Unix systems (Linux/MacOS).
+
+```shell
+./install.sh
+```
+
+Now your dotfiles inside `~` and `~/.config` point to files and directories within `config/`.
+
+### Computers setup (OS configuration)
 
 On my old laptop, I run below command after which all my programs and OS configuration is done:
 
@@ -43,7 +53,7 @@ Also, I strive for a setup that is seamlessly synced, minimalistic and highly ef
 
 - all that sync of control, notes, documents, bookmarks, locks,... despite not being in same local network (effectively turning my setup into being also a cloud) ([Tangler](https://github.com/robert-dorna/Tangler) will be self-hostable so it could be utilized here)
 
-### Custom ISO for bootable LiveCD/USB stick
+### Extras: custom ISO for bootable LiveCD/USB stick
 
 NixOS offers you an option to build you own custom .iso images.
 
@@ -51,7 +61,7 @@ See: https://nixos.wiki/wiki/Creating_a_NixOS_live_CD.
 
 I'm using this feature to create an installer .iso with docker and ngrok on it which I sometimes use on my old stationary computer (not laptops) to host dockerized apps.
 
-The image is defined in `nixos/livecd.nix` and I should be defining a normal iso (I guess optimized for being run on pendrive) instead of installer iso, but that is how I learned that this is even possible so for now it is pointelessly an installer image and in future will be a normal OS but on pendrive.
+The image is defined in `nixos/livecd.nix` and I should be defining a normal iso (I guess optimized for being run on pendrive) instead of installer iso, but that is how I learned that this is even possible so for now it is pointlessly an installer image and in future will be a normal OS but on pendrive.
 
 Also in future I should include in this image few more tools related to devops,  deployment monitoring and management. 
 
