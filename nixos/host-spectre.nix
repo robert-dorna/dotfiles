@@ -1,5 +1,5 @@
 input@{ config, pkgs, ... }:
-import ./shared.nix (input // {
+import ./host-shared.nix (input // {
   ## names
   hostName = "Spectre";
   userName = "ssurrealism";
@@ -18,22 +18,24 @@ import ./shared.nix (input // {
   };
 
   ## printing
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-    openFirewall = true;
-  };
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      gutenprint
-      gutenprintBin
-      hplip
-      hplipWithPlugin
-      brlaser
-      brgenml1lpr
-      brgenml1cupswrapper
-    ];
+  services = {
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      openFirewall = true;
+    };
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        gutenprint
+        gutenprintBin
+        hplip
+        hplipWithPlugin
+        brlaser
+        brgenml1lpr
+        brgenml1cupswrapper
+      ];
+    };
   };
 }
 

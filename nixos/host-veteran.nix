@@ -1,5 +1,5 @@
 input@{ config, pkgs, ... }:
-import ./shared.nix (input // {
+import ./host-shared.nix (input // {
   ## names
   hostName = "Veteran";
   userName = "robert_dorna";

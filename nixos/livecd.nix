@@ -10,50 +10,46 @@
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
   ];
 
-  # network
-  networking.hostName = "ButlerPod";
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 80 443 8080 8081 19000 19001 19002 ];
-    allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-    ];
+  ## network
+  networking = {
+    hostName = "ButlerPod";
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 443 8080 8081 19000 19001 19002 ];
+      allowedUDPPortRanges = [
+        { from = 4000; to = 4007; }
+        { from = 8000; to = 8010; }
+      ];
+    };
   };
 
-  # timezone and i18n
+  ## timezone and i18n
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # printing
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
-  services.avahi.openFirewall = true;
-
-  # fonts
+  ## fonts
   fonts.fonts = with pkgs; [
     hermit
     source-code-pro
     terminus_font
   ];
 
-  # user account
+  ## user account
   users.users.butler = {
     isNormalUser = true;
     password = "butler";
     extraGroups = [ "wheel" "audio" "docker" ];
   };
 
-  # programs
-
-  # Enable SSH in the boot process.
+  ## SSH in the boot process.
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA bbbbbbbbbbb@ccccccc"
   ];
 
+  ## programs
   virtualisation.docker.enable = true;
-
+  nixpkgs.config.allowUnfree = true;  # idk if that is necessary
   environment.systemPackages = with pkgs; [
     ## basics
     ranger
@@ -80,6 +76,4 @@
     nodejs
     gcc
   ];
-
-  nixpkgs.config.allowUnfree = true;
 }
