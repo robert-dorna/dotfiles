@@ -208,21 +208,30 @@ function db() {
 }
 
 function dr() {
-  if [ "$3" = "" ]; then
-    echo "usage: dr <docker_image_name> <port> <pwd target> [options] [cmd]"
+  if [ "$2" = "" ]; then
+    echo "usage: dr <docker_image_name> <pwd target> [options] [cmd]"
     echo "dr = Docker Run"
     return
   fi
-  docker run -p $2:$2 $4 --mount type=bind,src="$(pwd)",target="$3" "$1" $5
+  docker run $3 --mount type=bind,src="$(pwd)",target="$2" "$1" $4
 }
 
-function drib() {
-  if [ "$2" = "" ]; then
-    echo "usage: drib <docker_image_name> <pwd target> [options]"
-    echo "drib = Docker Run (image interactive)"
+function drp() {
+  if [ "$3" = "" ]; then
+    echo "usage: dr <docker_image_name> <pwd target> <port> [options] [cmd]"
+    echo "dr = Docker Run Port"
     return
   fi
-  docker run -it $3 --mount type=bind,src="$(pwd)",target="$2" "$1" bash
+  dr "$1" "$2" "-p $3:$3 $4" "$5"
+}
+
+function drb() {
+  if [ "$2" = "" ]; then
+    echo "usage: drb <docker_image_name> <pwd target> [options]"
+    echo "drb = Docker Run Bash"
+    return
+  fi
+  dr "$1" "$2" "-it $3" bash
 }
 
 alias ds='docker ps'
@@ -232,10 +241,6 @@ alias dcu='docker compose up'
 alias dcud='docker compose up -d'
 alias dcd='docker compose down'
 alias dcr='dcd && dcud'
-
-alias drt='dr tangler-server 8000 /usr/src/app'
-alias drtb='dr tangler-server 8000 /usr/src/app -it bash'
-
 
 ###############################
 # Commands - Utils shortcuts
