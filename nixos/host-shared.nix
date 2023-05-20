@@ -1,40 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
+{ config, pkgs, hostName, userName, ... }:
 {
   ## hardware
   imports = [ ./hardware-configuration.nix ];
 
-  ## hardware Spectre
-  # hardware.enableAllFirmware = true;
-  # boot = {
-  #   loader = {
-  #     systemd-boot.enable = true;
-  #     efi.canTouchEfiVariables = true;
-  #   };
-  #   extraModprobeConfig = ''
-  #     options snd-intel-dspcfg dsp_driver=1
-  #   '';
-  # };
-
-  ## hardware Veteran
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "/dev/sda";
-    extraEntries = ''
-      menuentry "Windows 10" {
-        chainloader (hd0,1)+1
-      }
-    '';
-  };
-
   ## network
   networking = {
-    hostName = "Veteran";  # or "Spectre"
+    hostName = hostName;
     networkmanager.enable = true;
     firewall = {
       enable = true;
@@ -63,25 +34,6 @@
     terminus_font
   ];
 
-  ## printing
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-    openFirewall = true;
-  };
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      gutenprint
-      gutenprintBin
-      hplip
-      hplipWithPlugin
-      brlaser
-      brgenml1lpr
-      brgenml1cupswrapper
-    ];
-  };
-
   ## i3wm
   environment.pathsToLink = [ "/libexec" ];
   services.xserver = {
@@ -102,7 +54,7 @@
 
   ## users
   # services.openssh.enable = true;
-  users.users.robert_dorna = {
+  users.users."${userName}" = {
     isNormalUser = true;
     # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
     extraGroups = [ "wheel" "audio" "docker" "adbusers" /*"vboxusers*/ ];
@@ -128,7 +80,7 @@
         opt = [];
       };   
       customRC = ''
-        luafile /home/robert_dorna/.config/nvim/init-nix.lua
+        luafile /home/${userName}/.config/nvim/init-nix.lua
       '';
     };
   };
