@@ -1,9 +1,9 @@
-input@{ config, pkgs, ... }:
-import ./host-shared.nix (input // {
+input@{ config, pkgs, lib, ... }:
+lib.recursiveUpdate (import ./host-shared.nix (input // {
   ## names
   hostName = "Spectre";
   userName = "ssurrealism";
-}) //
+}))
 {
   ## booting
   hardware.enableAllFirmware = true;

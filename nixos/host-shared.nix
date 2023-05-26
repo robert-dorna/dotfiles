@@ -1,7 +1,7 @@
 { config, pkgs, hostName, userName, ... }:
 {
   ## hardware
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ /etc/nixos/hardware-configuration.nix ];
 
   ## network
   networking = {
@@ -9,7 +9,7 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 8080 8081 19000 19001 19002 ];
+      allowedTCPPorts = [ 80 443 8080 8081 9000 9001 9002 9003 19000 19001 19002 ];
       allowedUDPPortRanges = [
         { from = 4000; to = 4007; }
         { from = 8000; to = 8010; }
