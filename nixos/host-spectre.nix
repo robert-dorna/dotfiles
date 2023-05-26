@@ -1,8 +1,9 @@
 input@{ config, pkgs, lib, ... }:
-lib.recursiveUpdate (import ./host-shared.nix (input // {
+lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   ## names
   hostName = "Spectre";
   userName = "ssurrealism";
+  sshKeyPath = /home + "/${userName}/.ssh/spectre.pub";
 }))
 {
   ## booting

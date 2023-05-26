@@ -1,4 +1,4 @@
-{ config, pkgs, hostName, userName, ... }:
+{ config, pkgs, lib, hostName, userName, sshKeyPath, ... }:
 {
   ## hardware
   imports = [ /etc/nixos/hardware-configuration.nix ];
@@ -53,7 +53,7 @@
   };  
 
   ## users
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
   users.users."${userName}" = {
     isNormalUser = true;
     # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
@@ -62,9 +62,9 @@
       firefox
       # min browser
     ];
-    # openssh.authorizedKeys.keys = [
-    #   "ssh-ed25519 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA bbbbbbbbbbb@ccccccc"
-    # ];
+    openssh.authorizedKeys.keys = [
+      (lib.removeSuffix "\n" (lib.readFile sshKeyPath))
+    ];
   };
 
   ## programs

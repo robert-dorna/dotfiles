@@ -1,8 +1,9 @@
 input@{ config, pkgs, lib, ... }:
-lib.recursiveUpdate (import ./host-shared.nix (input // {
+lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   ## names
   hostName = "Veteran";
   userName = "robert_dorna";
+  sshKeyPath = /home + "/${userName}/.ssh/veteran.pub";
 }))
 {
   ## booting
