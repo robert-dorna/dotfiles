@@ -39,14 +39,22 @@ alias ctd='redshift -x'       # also figure out better alias name?
 #
 
 function xr() {
+  if [ "$(hostname)" = "Veteran" ]; then
+    BUILD_IN_MONITOR="LVDS-1"
+    EXTERNAL_MONITOR="VGA-1"
+  else
+    BUILD_IN_MONITOR="eDP-1"
+    EXTERNAL_MONITOR="HDMI-1"
+  fi
+
   if [ "$1" = "" ]; then
-    xrandr --output HDMI-1 --off --output eDP-1 --primary --auto
+    xrandr --output $EXTERNAL_MONITOR --off --output $BUILD_IN_MONITOR --primary --auto
   elif [ "$1" = "1" ]; then
-    xrandr --output eDP-1 --off --output HDMI-1 --primary --auto 
+    xrandr --output $BUILD_IN_MONITOR --off --output $EXTERNAL_MONITOR --primary --auto
   elif [ "$1" = "l" ]; then
-    xrandr --output eDP-1 --auto --output HDMI-1 --auto --primary --left-of eDP-1
+    xrandr --output $BUILD_IN_MONITOR --auto --output $EXTERNAL_MONITOR --auto --primary --left-of $BUILD_IN_MONITOR
   elif [ "$1" = "r" ]; then
-    xrandr --output eDP-1 --auto --output HDMI-1 --auto --primary --right-of eDP-1
+    xrandr --output $BUILD_IN_MONITOR --auto --output $EXTERNAL_MONITOR --auto --primary --right-of $BUILD_IN_MONITOR
   else
     echo "unknown extra argument: $1 (known: 1, l, r)"
   fi
@@ -387,3 +395,8 @@ function locini() { find "$1" -path "*node_modules*" -prune -o -path "*build/*" 
 # ranger config (LOC instead of KiB for text/source code)
 #
 
+# automatic source .bashrc when using ssh shell
+# add note to prompt that the .bashrc config was changed and not pushed,
+#  so that no bash updates are accidentaly left not synced with another machine
+#
+# list, attach and steal shells from/on all other devices (ssh)
