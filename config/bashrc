@@ -71,6 +71,7 @@ alias bl='$HD/bin/bluetooth.sh'
 alias wifi='nmcli device wifi'
 alias wifi-salon='sudo nmcli device wifi connect TP-LINK_9D08'
 alias wifi-dom='sudo nmcli device wifi connect TP-Link_14C0'
+alias wifi-pokoj='sudo nmcli device wifi connect Robert\ Hotspot'
 alias wifi-phone='sudo nmcli device wifi connect Galaxy\ A70D79E'
 
 ###############################
@@ -207,12 +208,16 @@ alias gcloud='docker run -it --rm --volumes-from gcloud-config gcr.io/google.com
 # docker
 function db() {
   if [ "$1" = "" ]; then
-    echo "usage: db <docker_image_name>"
+    echo "usage: db <docker_image_name> [Dockerfile]"
     echo "db = Docker Build"
     return
   fi
 
-  docker build -t "$1" .
+  if [ "$2" = "" ]; then
+    docker build -t "$1" .
+  else
+    docker build -f "$2" -t "$1" .
+  fi
 }
 
 function dr() {
@@ -240,6 +245,15 @@ function drb() {
     return
   fi
   dr "$1" "$2" "-it $3" bash
+}
+
+function deb() {
+  if [ "$1" = "" ]; then
+    echo "usage: deb <docker_container_name>"
+    echo "deb = Docker Exec Bash"
+    return
+  fi
+  docker exec -it $1 bash
 }
 
 alias ds='docker ps'
@@ -394,6 +408,8 @@ function locini() { find "$1" -path "*node_modules*" -prune -o -path "*build/*" 
 #
 # ranger config (LOC instead of KiB for text/source code)
 #
+#
+# todo: autocompletions for my own functions (e.g. docker)
 
 # automatic source .bashrc when using ssh shell
 # add note to prompt that the .bashrc config was changed and not pushed,
