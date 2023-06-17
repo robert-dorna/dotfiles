@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ln -is $PWD/config/bashrc ~/.bashrc
+ln -is $PWD/config/bash_profile ~/.bash_profile
 ln -is $PWD/config/gitconfig ~/.gitconfig
 ln -is $PWD/config/Xresources ~/.Xresources
 ln -is $PWD/config/i3 ~/.config/i3
