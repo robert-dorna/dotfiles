@@ -89,6 +89,7 @@
     ## basics
     ranger
     rxvt_unicode
+    zellij
     git
 
     ## look & feel
@@ -97,6 +98,7 @@
     brightnessctl
 
     ## sysadmin & scripting
+    acpi
     file
     tree
     shellcheck
