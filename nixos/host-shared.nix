@@ -130,6 +130,7 @@
     cloc
     alacritty
     kitty
+    helix
     
     ## android
     android-studio
