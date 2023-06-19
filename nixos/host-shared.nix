@@ -80,8 +80,9 @@
         opt = [];
       };   
       customRC = ''
-        luafile /home/${userName}/.config/nvim/init-nix.lua
+        luafile /home/${userName}/.config/nvim/init.lua
       '';
+      # luafile /home/${userName}/.config/nvim/init-nix.lua
     };
   };
   nixpkgs.config.allowUnfree = true;  # todo: make this only for vscode
