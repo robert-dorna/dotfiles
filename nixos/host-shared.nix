@@ -129,6 +129,7 @@
     postman
     cloc
     alacritty
+    kitty
     
     ## android
     android-studio
