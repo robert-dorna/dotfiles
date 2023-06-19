@@ -128,6 +128,7 @@
     kompose
     postman
     cloc
+    alacritty
     
     ## android
     android-studio
