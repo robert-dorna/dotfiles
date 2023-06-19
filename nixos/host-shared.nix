@@ -29,6 +29,7 @@
   
   ## fonts
   fonts.fonts = with pkgs; [
+    nerdfonts
     hermit
     source-code-pro
     terminus_font
