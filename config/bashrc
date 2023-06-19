@@ -11,6 +11,14 @@ export PROMPT_SPACER=' '
 export BL_ATH=74:45:CE:18:AE:39
 export BL_JBL=F8:5C:7D:15:76:E1
 
+if [ "$(hostname)" = "Veteran" ]; then
+  export HOST_CONFIG_FILE=$HOME/Projects/dotfiles/nixos/host-veteran.nix
+elif [ "$(hostname)" = "Spectre" ]; then
+  export HOST_CONFIG_FILE=$HOME/Projects/dotfiles/nixos/host-spectre.nix
+else
+  export HOST_CONFIG_FILE=
+fi
+
 ###############################
 # Environment - Local
 ###############################
@@ -95,6 +103,15 @@ function ac() { a "$1" | sed "s/[^=]*='//;s/'//"; }  # TODO: this should remove 
 alias bc='$EDITOR $HD/bin/bluetooth.sh'
 alias c='$EDITOR $C'
 alias cr="exec bash"  # zsh version has -l
+alias hc='$EDITOR $HOST_CONFIG_FILE'
+alias hcs='$EDITOR $HOME/Projects/dotfiles/nixos/host-shared.nix'
+function hcr() {
+  if [ "$(hostname)" == "Veteran" ]; then
+    sudo nixos-rebuild -I nixos-config=$HOME/Projects/dotfiles/nixos/host-veteran.nix switch
+  else
+    sudo nixos-rebuild -I nixos-config=$HOME/Projects/dotfiles/nixos/host-spectre.nix switch
+  fi
+}
 
 ###############################
 # Commands - Prompt
