@@ -173,6 +173,15 @@ fi
 # Use default
 alias o='xdg-open'
 
+# zellij
+alias zl='zellij list-sessions'
+function zm() {
+  zellij attach main
+  if [ "$?" -eq 1 ]; then
+    zellij -s main
+  fi
+}
+
 # Firefox
 if [ "$(uname)" = "Darwin" ]; then
   alias b='open -n -a Firefox.app --args'
