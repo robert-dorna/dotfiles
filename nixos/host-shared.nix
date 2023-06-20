@@ -111,6 +111,7 @@
     wget
     htop
     gparted
+    sshfs
     # fast-cli
     # pup
 

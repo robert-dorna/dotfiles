@@ -5,6 +5,7 @@
 
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/Projects/dotfiles/bin"
 # export PATH="$PATH:$ANDROID_HOME/Sdk/platform-tools"
 export PAGER=less  		
 export PROMPT_SPACER=' '       
@@ -181,6 +182,29 @@ function zm() {
     zellij -s main
   fi
 }
+
+# My other host sshfs mounting and unmounting
+if [ "$(hostname)" = "Spectre" ]; then
+  alias hm='sshfs veteran: veteran'
+  alias hu='fusermount -u $HOME/veteran'
+  function hl() {
+    if [ "$(ls -A $HOME/veteran)" ]; then
+      echo "veteran/ is loaded (or something was created there)"
+    else
+      echo "veteran/ is empty"
+    fi
+  }
+elif [ "$(hostname)" = "Veteran" ]; then
+  alias hm='sshfs spectre: spectre'
+  alias hu='fusermount -u $HOME/spectre'
+  function hl() {
+    if [ "$(ls -A $HOME/spectre)" ]; then
+      echo "spectre/ is loaded (or something was created there)"
+    else
+      echo "spectre/ is empty"
+    fi
+  }
+fi
 
 # Firefox
 if [ "$(uname)" = "Darwin" ]; then
