@@ -9,7 +9,7 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 8080 8081 9000 9001 9002 9003 19000 19001 19002 ];
+      allowedTCPPorts = [ 80 443 19000 19001 19002 ];
       allowedUDPPortRanges = [
         { from = 4000; to = 4007; }
         { from = 8000; to = 8010; }
@@ -19,9 +19,11 @@
 
   ## touchpad and sound
   sound.enable = true;
+  hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   services.xserver.libinput.enable = true;
+  services.blueman.enable = true;
   
   ## timezone and i18n
   time.timeZone = "Europe/Warsaw";
