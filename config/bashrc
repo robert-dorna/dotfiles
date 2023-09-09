@@ -218,6 +218,17 @@ elif [ "$(hostname)" = "Veteran" ]; then
   }
 fi
 
+# Mounting and unmounting phone over MTP
+alias phone-mount="jmtpfs ~/usb-phone"
+alias phone-unmount="fusermount -u ~/usb-phone"
+function phone-list() {
+  if [ "$(ls -A $HOME/usb-phone)" ]; then
+    echo "usb-phone/ is loaded (or something was created there)"
+  else
+    echo "usb-phone/ is empty"
+  fi
+}
+
 # Firefox
 if [ "$(uname)" = "Darwin" ]; then
   alias b='open -n -a Firefox.app --args'
