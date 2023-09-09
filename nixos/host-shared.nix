@@ -124,6 +124,7 @@
     htop
     gparted
     sshfs
+    jmtpfs
     # fast-cli
     # pup
 
