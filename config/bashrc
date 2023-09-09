@@ -177,9 +177,9 @@ alias o='xdg-open'
 # zellij
 alias zl='zellij list-sessions'
 function zm() {
-  zellij attach main
+  zellij attach main options --disable-mouse-mode
   if [ "$?" -eq 1 ]; then
-    zellij -s main
+    zellij -s main options --disable-mouse-mode
   fi
 }
 
