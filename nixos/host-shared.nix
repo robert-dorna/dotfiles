@@ -71,6 +71,11 @@
   };
 
   ## programs
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  };
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true;
   programs.adb.enable = true;
