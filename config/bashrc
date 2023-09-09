@@ -251,9 +251,11 @@ function boxm() {
 }
 
 # gcloud
-alias gcloud-pull='docker pull gcr.io/google.com/cloudsdktool/google-cloud-cli:latest'
-alias gcloud-version='docker run --rm gcr.io/google.com/cloudsdktool/google-cloud-cli:latest gcloud version'
-alias gcloud='docker run -it --rm --volumes-from gcloud-config gcr.io/google.com/cloudsdktool/google-cloud-cli bash'
+GCLOUD_IMAGE="gcr.io/google.com/cloudsdktool/google-cloud-cli:latest"
+alias gcloud-pull='docker pull $GCLOUD_IMAGE'
+alias gcloud-version='docker run --rm $GCLOUD_IMAGE gcloud version'
+alias gcloud-auth='docker run -ti --name gcloud-config $GCLOUD_IMAGE gcloud auth login'
+alias gcloud='docker run -it --rm --volumes-from gcloud-config $GCLOUD_IMAGE bash'
 
 # docker
 function db() {
