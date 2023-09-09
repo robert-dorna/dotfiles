@@ -186,6 +186,7 @@ function zm() {
 # My other host sshfs mounting and unmounting
 if [ "$(hostname)" = "Spectre" ]; then
   alias hm='sshfs veteran: $HOME/veteran'
+  alias hmp='sshfs veteran_pokoj: $HOME/veteran'
   alias hu='fusermount -u $HOME/veteran'
   function hl() {
     if [ "$(ls -A $HOME/veteran)" ]; then
@@ -196,6 +197,7 @@ if [ "$(hostname)" = "Spectre" ]; then
   }
 elif [ "$(hostname)" = "Veteran" ]; then
   alias hm='sshfs spectre: $HOME/spectre'
+  alias hmp='sshfs spectre_pokoj: $HOME/spectre'
   alias hu='fusermount -u $HOME/spectre'
   function hl() {
     if [ "$(ls -A $HOME/spectre)" ]; then
