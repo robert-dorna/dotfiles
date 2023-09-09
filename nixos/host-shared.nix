@@ -90,6 +90,11 @@
   };
   nixpkgs.config.allowUnfree = true;  # todo: make this only for vscode
   environment.systemPackages = with pkgs; [
+    ## Office
+    # libreoffice-qt
+    # hunspell
+    # hunspellDicts.en_US
+
     ## basics
     ranger
     rxvt_unicode
