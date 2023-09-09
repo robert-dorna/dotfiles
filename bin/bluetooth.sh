@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -n "$1" ]; then
   if [ "${1:0:1}" = "-" ]; then
