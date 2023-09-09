@@ -136,6 +136,9 @@
     drawio
     evince
 
+    ## images
+    gqview
+
     ## programming
     vscode
     ngrok
