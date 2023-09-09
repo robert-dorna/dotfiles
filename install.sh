@@ -12,3 +12,17 @@ ln -iTs $PWD/config/nixpkgs ~/.config/nixpkgs
 ln -iTs $PWD/config/background-image ~/.background-image
 
 echo "to setup wallpaper, create a symlink 'config/background-image' to 'wallpapers/<your-pick>'"
+
+if [ "$(hostname)" = "Spectre" ]; then
+  if ! [ -d "$HOME/veteran" ]; then
+    mkdir $HOME/veteran
+  fi
+elif [ "$(hostname)" = "Veteran" ]; then
+  if ! [ -d "$HOME/spectre" ]; then
+    mkdir $HOME/spectre
+  fi
+fi
+
+if ! [ -d "$HOME/usb" ]; then
+  mkdir $HOME/usb
+fi
