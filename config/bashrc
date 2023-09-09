@@ -182,6 +182,16 @@ function zm() {
     zellij -s main options --disable-mouse-mode
   fi
 }
+function zs() {
+  if [ "$1" = "" ]; then
+    echo "usage: zs <session_name>"
+  else
+    zellij attach "$1" options --disable-mouse-mode
+    if [ "$?" -eq 1 ]; then
+      zellij -s "$1" options --disable-mouse-mode
+    fi
+  fi
+}
 
 # My other host sshfs mounting and unmounting
 if [ "$(hostname)" = "Spectre" ]; then
