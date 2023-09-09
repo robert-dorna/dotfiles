@@ -4,6 +4,7 @@ lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   hostName = "Veteran";
   userName = "robert_dorna";
   sshKeyPath = /home + "/${userName}/.ssh/veteran.pub";
+  systemStateVersion = "22.11";
 }))
 {
   ## booting

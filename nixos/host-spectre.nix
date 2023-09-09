@@ -4,6 +4,7 @@ lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   hostName = "Spectre";
   userName = "ssurrealism";
   sshKeyPath = /home + "/${userName}/.ssh/spectre.pub";
+  systemStateVersion = "23.05";
 }))
 {
   ## booting
