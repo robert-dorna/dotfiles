@@ -136,6 +136,8 @@
     alacritty
     kitty
     helix
+    go-swagger
+    dbeaver
     
     ## android
     android-studio
