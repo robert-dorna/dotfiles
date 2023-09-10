@@ -26,3 +26,7 @@ fi
 if ! [ -d "$HOME/usb" ]; then
   mkdir "$HOME/usb"
 fi
+
+if ! [ -d "$HOME/usb-phone" ]; then
+  mkdir "$HOME/usb-phone"
+fi
