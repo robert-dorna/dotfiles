@@ -3,6 +3,8 @@
   ## hardware
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   ## network
   networking = {
     hostName = hostName;
