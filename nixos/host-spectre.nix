@@ -20,7 +20,6 @@ lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   };
 
   ## printing
-  # hardware.sane.enable = false; fix for printer error but probably that was not the cause, can delete if printing works
   services = {
     avahi = {
       enable = true;
