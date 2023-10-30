@@ -26,6 +26,8 @@
   hardware.pulseaudio.support32Bit = true;
   services.xserver.libinput.enable = true;
   services.blueman.enable = true;
+
+  hardware.sane.enable = true;
   
   ## timezone and i18n
   time.timeZone = "Europe/Warsaw";
@@ -62,7 +64,7 @@
   users.users."${userName}" = {
     isNormalUser = true;
     # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
-    extraGroups = [ "wheel" "audio" "docker" "adbusers" /*"vboxusers*/ ];
+    extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" /*"vboxusers*/ ];
     packages = with pkgs; [
       firefox
       # min browser
