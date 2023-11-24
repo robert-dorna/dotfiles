@@ -122,14 +122,14 @@ function zs() {
 
 # mounting and unmounting other computers via sshfs
 function hm() {
-  if ! [ -e "$HOME/mounts" ]; then
-    mkdir "$HOME/mounts"
-  fi
+  mkdir -p "$HOME/mounts/$1"
   sshfs $1: "$HOME/mounts/$1"
 }
 
 function hu() {
   fusermount -u "$HOME/mounts/$1"
+  rmdir "$HOME/mounts/$1"
+  rmdir "$HOME/mounts"
 }
 
 function hl() {
