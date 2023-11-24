@@ -157,10 +157,6 @@ function phone-list() {
 # Ranger
 function f() { ranger "$1" --choosedir="$HOME"/.rangerdir; cd "$(cat $HOME/.rangerdir)"; }
 
-# Find
-alias fn='find . -iname'
-function fni() { find "$1" -iname "$2"; }
-
 # Neovim
 alias n='nvim'
 alias nc='nvim $HOME/.config/nvim/init.lua'
@@ -241,7 +237,6 @@ alias dcr='dcd && dcud'
 # Commands - Utils shortcuts
 ###############################
 
-alias cgrep='\grep --color=auto'
 alias grep='grep -i --color=auto'
 alias e='echo'
 alias ls='ls --color=auto --group-directories-first'
