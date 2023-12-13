@@ -1,32 +1,30 @@
 #!/usr/bin/env bash
 
-ln -is "$PWD/config/bash_profile" ~/.bash_profile
-ln -is "$PWD/config/bashrc" ~/.bashrc
-ln -is "$PWD/config/gitconfig" ~/.gitconfig
-ln -is "$PWD/config/Xresources" ~/.Xresources
+## bash
+ln -fs "$PWD/config/bash/bash_profile" ~/.bash_profile
+ln -fs "$PWD/config/bash/bashrc" ~/.bashrc
 
-ln -iTs "$PWD/config/alacritty" ~/.config/alacritty
-ln -iTs "$PWD/config/i3" ~/.config/i3
-ln -iTs "$PWD/config/nvim" ~/.config/nvim
-ln -iTs "$PWD/config/nixpkgs" ~/.config/nixpkgs
-ln -iTs "$PWD/config/background-image" ~/.background-image
+## git
+ln -fs "$PWD/config/git/gitconfig" ~/.gitconfig
 
-echo "to setup wallpaper, create a symlink 'config/background-image' to 'wallpapers/<your-pick>'"
+## i3
+ln -fTs "$PWD/config/i3" ~/.config/i3
 
-if [ "$(hostname)" = "Spectre" ]; then
-  if ! [ -d "$HOME/veteran" ]; then
-    mkdir "$HOME/veteran"
-  fi
-elif [ "$(hostname)" = "Veteran" ]; then
-  if ! [ -d "$HOME/spectre" ]; then
-    mkdir "$HOME/spectre"
-  fi
-fi
+## nixpkgs
+ln -fTs "$PWD/config/nixpkgs" ~/.config/nixpkgs
 
-if ! [ -d "$HOME/usb" ]; then
-  mkdir "$HOME/usb"
-fi
+## nushell
+mkdir -p "$HOME/.config/nushell"
+ln -fs "$PWD/config/nushell/config.nu" ~/.config/nushell/config.nu
+ln -fs "$PWD/config/nushell/env.nu" ~/.config/nushell/env.nu
 
-if ! [ -d "$HOME/usb-phone" ]; then
-  mkdir "$HOME/usb-phone"
-fi
+## nvim
+ln -fTs "$PWD/config/nvim" ~/.config/nvim
+
+## urxvt
+ln -fs "$PWD/config/urxvt/Xresources" ~/.Xresources
+
+## vscode
+mkdir -p "$HOME/.config/Code/User"
+ln -fs "$PWD/config/vscode/settings.json" ~/.config/Code/User/settings.json
+

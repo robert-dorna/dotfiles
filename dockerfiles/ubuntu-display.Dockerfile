@@ -3,7 +3,7 @@ FROM ubuntu:latest
 # taken from:
 # https://stackoverflow.com/questions/16296753/can-you-run-gui-applications-in-a-linux-docker-container
 
-RUN apt update && apt upgrade --yes && apt install sudo
+RUN apt update && apt upgrade --yes && apt install sudo openjdk-17-jre
 
 # Replace 1000 with your user / group id
 RUN export uid=1000 gid=1000 && \

@@ -5,36 +5,48 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
-  ## network
+  ## Unfree code
+  nixpkgs.config.allowUnfree = true;  # todo: make this only for vscode
+
+  ## Network
   networking = {
     hostName = hostName;
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 8080 8081 19000 19001 19002 ];
+      allowedTCPPorts = [ 80 443 ];
       allowedUDPPortRanges = [
         { from = 4000; to = 4007; }
         { from = 8000; to = 8010; }
       ];
     };
   };
-
-  ## touchpad and sound
-  sound.enable = true;
+  
+  ## Bluetooth
   hardware.bluetooth.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  services.xserver.libinput.enable = true;
   services.blueman.enable = true;
 
+  ## Sound
+  sound.enable = true;
+  hardware = {
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+    };
+  };
+
+  ## Printing
   hardware.sane.enable = true;
+
+  ## Touchpad and Mouse
+  services.xserver.libinput.enable = true;
   
-  ## timezone and i18n
+  ## Timezone and i18n
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
   
-  ## fonts
-  fonts.fonts = with pkgs; [
+  ## Fonts
+  fonts.packages = with pkgs; [
     nerdfonts
     hermit
     source-code-pro
@@ -59,12 +71,12 @@
     };
   };  
 
-  ## users
+  ## Users
   services.openssh.enable = true;
   users.users."${userName}" = {
     isNormalUser = true;
     # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
-    extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" /*"vboxusers*/ ];
+    extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" ];
     packages = with pkgs; [
       firefox
       # min browser
@@ -74,118 +86,120 @@
     ];
   };
 
-  ## programs
-  services.flatpak.enable = true;
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-  };
+  ## Programs
   virtualisation.docker.enable = true;
-  # virtualisation.virtualbox.host.enable = true;
-  programs.adb.enable = true;
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    configure = {
-      packages.myPlugins = with pkgs.vimPlugins; {
-        start = [ vim-nix ];
-        opt = [];
-      };   
-      customRC = ''
-        luafile /home/${userName}/.config/nvim/init.lua
-      '';
-      # luafile /home/${userName}/.config/nvim/init-nix.lua
+  programs = {
+    adb.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      configure = {
+        packages.myPlugins = with pkgs.vimPlugins; {
+          start = [ vim-nix ];
+          opt = [];
+        };   
+        customRC = ''
+          luafile /home/${userName}/.config/nvim/init.lua
+        '';
+      };
     };
   };
-  nixpkgs.config.allowUnfree = true;  # todo: make this only for vscode
   environment.systemPackages = with pkgs; [
-    ## Office
-    # libreoffice-qt
-    # hunspell
-    # hunspellDicts.en_US
-
-    ## basics
-    ranger
+    ## Terminal navigation and basic tools
     rxvt_unicode
     zellij
-    git
-
-    ## look & feel
-    redshift
-    volctl
-    brightnessctl
-
-    ## sysadmin & scripting
-    acpi
+    ranger
     file
     tree
+    unzip
+    wget
+    sshfs
+    jmtpfs
+
+    ## System monitoring and administration
+    brightnessctl     # screen brightness
+    redshift          # screen redness
+    volctl            # sound
+    acpi              # battery
+    htop        
+    gparted
+    fast-cli          # network speed
+
+    ## Documents and images
+    marktext
+    drawio
+    evince
+    gqview
+
+    ## Social
+    discord
+    # signal-desktop
+
+    ## Scripting
+    nushell
     shellcheck
     jq
     yq-go
     sd
-    unzip
-    wget
-    htop
-    gparted
-    sshfs
-    jmtpfs
-    # fast-cli
     # pup
 
-    ## social stuff
-    signal-desktop
-    discord
+    ## Programming - base
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        ## General
+        vscodevim.vim
+        eamodio.gitlens
+        usernamehw.errorlens
+        vscode-icons-team.vscode-icons
 
-    ## documents
-    marktext
-    drawio
-    evince
+        ## Nix
+        jnoortheen.nix-ide
 
-    ## images
-    gqview
+        ## Python
+        # ms-python.python
 
-    ## programming
-    vscode
-    ngrok
-    minikube
-    kompose
-    postman
+        ## JS/TS/Node
+        dbaeumer.vscode-eslint
+        esbenp.prettier-vscode
+        bradlc.vscode-tailwindcss
+        svelte.svelte-vscode
+      ];
+    })
+    git
+    gh
     cloc
-    alacritty
-    kitty
-    helix
+
+    ## Programming - devops
+    ngrok
+    # minikube
+    # kompose
+
+    ## Programming - backend
+    # postman
     go-swagger
-    dbeaver
-    
-    ## android
-    android-studio
-    bundletool
-    scrcpy
 
-    ## python
-    python39
-    poetry
-    jupyter
-
-    ## node
-    nodejs
-
-    ## sql
+    ## Programming - database
+    # dbeaver
     sqlite
 
-    ## c++
+    ## Programming - android
+    # android-studio
+    # bundletool
+    scrcpy
+
+    ## Programming - python
+    # python39
+    # poetry
+    # jupyter
+
+    ## Programming - node
+    nodejs
+
+    ## Programming - c++
+    # qtcreator
     gcc
     gdb
-    # qtcreator
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you

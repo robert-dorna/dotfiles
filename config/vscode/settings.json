@@ -1,0 +1,6 @@
+{
+    "window.zoomLevel": 2,
+    "gitlens.mode.active": "zen",
+    "editor.formatOnSave": false,
+    "workbench.iconTheme": "vscode-icons"
+}

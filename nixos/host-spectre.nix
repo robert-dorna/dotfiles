@@ -4,10 +4,10 @@ lib.recursiveUpdate (import ./host-shared.nix (input // rec {
   hostName = "Spectre";
   userName = "ssurrealism";
   sshKeyPath = /home + "/${userName}/.ssh/spectre.pub";
-  systemStateVersion = "23.05";
+  systemStateVersion = "23.11";
 }))
 {
-  ## booting
+  ## Booting
   hardware.enableAllFirmware = true;
   boot = {
     loader = {
@@ -19,7 +19,7 @@ lib.recursiveUpdate (import ./host-shared.nix (input // rec {
     '';
   };
 
-  ## printing
+  ## Printing
   services = {
     avahi = {
       enable = true;
