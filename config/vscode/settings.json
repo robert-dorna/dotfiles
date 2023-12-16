@@ -2,5 +2,12 @@
     "window.zoomLevel": 2,
     "gitlens.mode.active": "zen",
     "editor.formatOnSave": false,
-    "workbench.iconTheme": "vscode-icons"
+    "workbench.iconTheme": "vscode-icons",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "editor.stickyScroll.enabled": false
 }

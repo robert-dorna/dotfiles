@@ -25,6 +25,28 @@ ln -fTs "$PWD/config/nvim" ~/.config/nvim
 ln -fs "$PWD/config/urxvt/Xresources" ~/.Xresources
 
 ## vscode
-mkdir -p "$HOME/.config/Code/User"
-ln -fs "$PWD/config/vscode/settings.json" ~/.config/Code/User/settings.json
+mkdir -p "$HOME/.config/Code - Insiders/User"
+ln -fs "$PWD/config/vscode/settings.json" "$HOME/.config/Code - Insiders/User/settings.json"
 
+code-insiders --install-extension vscodevim.vim
+code-insiders --install-extension eamodio.gitlens
+code-insiders --install-extension usernamehw.errorlens
+code-insiders --install-extension vscode-icons-team.vscode-icons
+
+## vscode - AI
+code-insiders --install-extension github.copilot
+code-insiders --install-extension github.copilot-chat
+
+## vscode - Devops
+code-insiders --install-extension jnoortheen.nix-ide
+code-insiders --install-extension ms-azuretools.vscode-docker
+code-insiders --install-extension ms-vscode-remote.remote-containers
+
+## vscode - Python
+# ms-python.python
+
+## vscode - JS/TS/Node
+code-insiders --install-extension dbaeumer.vscode-eslint
+code-insiders --install-extension esbenp.prettier-vscode
+code-insiders --install-extension bradlc.vscode-tailwindcss
+code-insiders --install-extension svelte.svelte-vscode

@@ -144,27 +144,43 @@
     # pup
 
     ## Programming - base
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        ## General
-        vscodevim.vim
-        eamodio.gitlens
-        usernamehw.errorlens
-        vscode-icons-team.vscode-icons
+    ((vscode.override { isInsiders = true; }).overrideAttrs (
+      oldAttrs: rec {
+        version = "latest";
+        src = builtins.fetchTarball {
+          url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
+          sha256 = "023ryfx9zj7d7ghh41xixsz3yyngc2y6znkvfsrswcij67jqm8cd";
+        };
+      }
+    ))
+    # TODO: add extensions to above vscode from below (currently there is no easy way to add it to vscode.override)
+    # (vscode-with-extensions.override {
+    #   vscodeExtensions = with vscode-extensions; [
+    #     ## General
+    #     vscodevim.vim
+    #     eamodio.gitlens
+    #     usernamehw.errorlens
+    #     vscode-icons-team.vscode-icons
 
-        ## Nix
-        jnoortheen.nix-ide
+    #     ## AI
+    #     github.copilot
+    #     github.copilot-chat
 
-        ## Python
-        # ms-python.python
+    #     ## Devops
+    #     jnoortheen.nix-ide
+    #     ms-azuretools.vscode-docker
+    #     ms-vscode-remote.remote-containers
 
-        ## JS/TS/Node
-        dbaeumer.vscode-eslint
-        esbenp.prettier-vscode
-        bradlc.vscode-tailwindcss
-        svelte.svelte-vscode
-      ];
-    })
+    #     ## Python
+    #     # ms-python.python
+
+    #     ## JS/TS/Node
+    #     dbaeumer.vscode-eslint
+    #     esbenp.prettier-vscode
+    #     bradlc.vscode-tailwindcss
+    #     svelte.svelte-vscode
+    #   ];
+    # })
     git
     gh
     cloc
