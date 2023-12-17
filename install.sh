@@ -41,6 +41,7 @@ code-insiders --install-extension github.copilot-chat
 code-insiders --install-extension jnoortheen.nix-ide
 code-insiders --install-extension ms-azuretools.vscode-docker
 code-insiders --install-extension ms-vscode-remote.remote-containers
+code-insiders --install-extension ms-vscode-remote.remote-ssh
 
 ## vscode - Python
 # ms-python.python
