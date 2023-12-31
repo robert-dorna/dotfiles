@@ -1,13 +1,14 @@
 {
-    "window.zoomLevel": 2,
-    "gitlens.mode.active": "zen",
-    "editor.formatOnSave": false,
-    "workbench.iconTheme": "vscode-icons",
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    },
-    "editor.stickyScroll.enabled": false
+  "window.zoomLevel": 2,
+  "gitlens.mode.active": "zen",
+  "editor.formatOnSave": true,
+  "workbench.iconTheme": "vscode-icons",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "editor.stickyScroll.enabled": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
