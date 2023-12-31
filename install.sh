@@ -52,3 +52,8 @@ code-insiders --install-extension dbaeumer.vscode-eslint
 code-insiders --install-extension esbenp.prettier-vscode
 code-insiders --install-extension bradlc.vscode-tailwindcss
 code-insiders --install-extension svelte.svelte-vscode
+
+# npm configuration for global installs
+npm set prefix ~/.npm-global
+mkdir -p ~/.npm-global
+# npx should work with just above, to ommit npx add ~/.npm-global/bin to $PATH
