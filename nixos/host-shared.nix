@@ -87,6 +87,11 @@
   };
 
   ## Programs
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  };
   virtualisation.docker.enable = true;
   programs = {
     adb.enable = true;
@@ -193,6 +198,7 @@
     ## Programming - backend
     # postman
     go-swagger
+    bruno
 
     ## Programming - database
     # dbeaver
