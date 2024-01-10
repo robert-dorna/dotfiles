@@ -76,7 +76,7 @@
   users.users."${userName}" = {
     isNormalUser = true;
     # note: docker group is a vuln! (root escalation) (https://nixos.wiki/wiki/Docker)
-    extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" ];
+    extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" "vboxusers" ];
     packages = with pkgs; [
       firefox
       # min browser
@@ -92,7 +92,16 @@
     enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    virtualbox = {
+      host.enable = true;
+      guest = {
+        enable = true;
+        x11 = true;
+      };
+    };
+  };
   programs = {
     adb.enable = true;
     neovim = {
