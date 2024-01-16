@@ -62,10 +62,10 @@ URxvt.shading: 20
 
 !! URxvt Appearance
 !URxvt.font: xft:Hermit Light:size=10
-URxvt.font: xft:Hermit:style=Regular:size=16
-URxvt.boldFont: xft:Hermit:style=Bold:size=16
-URxvt.italicFont: xft:Hermit:style=Italic:size=16
-URxvt.boldItalicFont: xft:Hermit:style=Bold Italic:size=16
+URxvt.font: xft:Hermit:style=Regular:size=14
+URxvt.boldFont: xft:Hermit:style=Bold:size=14
+URxvt.italicFont: xft:Hermit:style=Italic:size=14
+URxvt.boldItalicFont: xft:Hermit:style=Bold Italic:size=14
 
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
