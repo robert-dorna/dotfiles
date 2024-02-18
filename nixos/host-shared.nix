@@ -79,6 +79,7 @@
     extraGroups = [ "wheel" "audio" "docker" "adbusers" "scanner" "lp" "vboxusers" ];
     packages = with pkgs; [
       firefox
+      chromium
       # min browser
     ];
     openssh.authorizedKeys.keys = [
