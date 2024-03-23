@@ -177,7 +177,7 @@ alias gcloud='docker run -it --rm --volumes-from gcloud-config $GCLOUD_IMAGE bas
 # docker
 function db() {
   if [ "$1" = "" ]; then
-    echo "usage: db <docker_image_name> [Dockerfile]"
+    echo "usage: db <docker_image_name> [Dockerfile] [logsdir]"
     echo "db = Docker Build"
     return
   fi
@@ -185,7 +185,12 @@ function db() {
   if [ "$2" = "" ]; then
     docker build -t "$1" .
   else
-    docker build -f "$2" -t "$1" .
+    if [ "$3" = "" ]; then
+      docker build -f "$2" -t "$1" .
+    else
+      logfile="$3/$1-build-$(date '+%Y-%m-%d--%H-%M-%S').log"
+      docker build -f "$2" -t "$1" --progress plain . |& tee "$logfile"
+    fi
   fi
 }
 
