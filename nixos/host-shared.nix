@@ -130,6 +130,7 @@
     wget
     sshfs
     jmtpfs
+    bat
 
     ## System monitoring and administration
     brightnessctl     # screen brightness
