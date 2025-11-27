@@ -1,7 +1,4 @@
 {
-  "window.zoomLevel": 2,
-  "gitlens.mode.active": "zen",
-  "editor.formatOnSave": true,
   "workbench.iconTheme": "vscode-icons",
   "github.copilot.enable": {
     "*": true,
@@ -9,6 +6,32 @@
     "markdown": false,
     "scminput": false
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "workbench.colorTheme": "Default Light+",
+  "gitlens.mode.active": "zen",
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "editor.codeActionsOnSave": {},
+  "cmake.showOptionsMovedNotification": false,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "editor.wordWrap": "off",
+  "workbench.startupEditor": "none",
+  "svelte.enable-ts-plugin": true,
+  "mesonbuild.downloadLanguageServer": true,
   "editor.stickyScroll.enabled": false,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "window.zoomLevel": 1,
+  "workbench.sideBar.location": "right",
+  "editor.minimap.side": "left",
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }

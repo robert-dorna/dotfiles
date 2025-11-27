@@ -16,4 +16,4 @@ fi
 
 # 006 as devices worked for right USB slot
 # resolution 1200 is very detailed but long
-scanimage -d 'genesys:libusb:001:011' -o "$OUTPUT_FILE.png" --mode Color --resolution 300
+scanimage -d 'genesys:libusb:001:014' -o "$OUTPUT_FILE.png" --mode Color --resolution 300

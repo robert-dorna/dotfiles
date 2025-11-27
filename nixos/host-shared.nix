@@ -27,7 +27,11 @@
   services.blueman.enable = true;
 
   ## Sound
-  sound.enable = true;
+  sound.enable = true;  # pulseaudio is bad at handing audio with bluetoothctl so I use pipewire 
+                          # https://nixos.wiki/wiki/PipeWire
+  #security.rtkit.enable = true;
+  #services.pipewire = {   enable = true;   alsa.enable = true;   alsa.support32Bit = true;   pulse.enable = true;   # If you want to use JACK applications, uncomment this   #jack.enable = true; };
+  
   hardware = {
     pulseaudio = {
       enable = true;
@@ -47,7 +51,7 @@
   
   ## Fonts
   fonts.packages = with pkgs; [
-    nerdfonts
+    # nerdfonts
     hermit
     source-code-pro
     terminus_font
@@ -165,7 +169,7 @@
         version = "latest";
         src = builtins.fetchTarball {
           url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
-          sha256 = "023ryfx9zj7d7ghh41xixsz3yyngc2y6znkvfsrswcij67jqm8cd";
+	  sha256 = "1iz6qyzlj9fy94vcrgzcqnfa2vgp8824064pyxxrlj26xg3kp834";
         };
       }
     ))
@@ -247,4 +251,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "${systemStateVersion}"; # Did you read the comment?
 }
-
